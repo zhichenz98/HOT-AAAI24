@@ -194,3 +194,31 @@ def get_cross_cost(R_list, X_list, p = 2):
             C += np.reshape(ot.utils.dist(X[i],X[j],p=p), shape)
 
     return C
+
+
+def eval_cluster_acc(c, gnd, K):
+    n_hit = 0
+    n = 0
+    num_cluster = len(c)
+    for i in range(num_cluster):
+        base_ind = 0
+        for k in range(K):
+            if len(c[k][i]) < len(c[base_ind][i]):
+                base_ind = k
+        for ele in c[base_ind][i]:
+            gnd_index = np.where(gnd[:,base_ind]==ele)[0]
+            if len(gnd_index) == 0:
+                continue
+            gnd_index = gnd[gnd_index].squeeze()
+            hit = True
+            for k in range(K):
+                if gnd_index[k] not in c[k][i]:
+                    hit=False
+                    break
+            if hit:
+                n_hit+=1
+            n+=1
+    return n_hit/n
+            
+        
+        

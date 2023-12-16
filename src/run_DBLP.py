@@ -9,7 +9,7 @@ from hot import hot
 
 ## set parameters
 K = 3   # number of graphs
-n = 500 # number of nodes
+n = 1000 # number of nodes
 attributed = False # use node attributes or not
 num_cluster = int(n/50)   # number of clusters
 alpha = 0.5 # alpha * rwr + (1-alpha) * attribute

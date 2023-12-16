@@ -1,8 +1,9 @@
 import numpy as np
 import time
 import ot
+import sys
 from log_mot import multi_FGW
-from hot_utils import get_cross_cost, get_intra_cost, get_hits_c
+from hot_utils import get_cross_cost, get_intra_cost, get_hits_c, eval_cluster_acc
 
 
 def get_cluster_fgw(r, x, A_list, mu_list, num_c):
@@ -39,7 +40,15 @@ def get_cluster_fgw(r, x, A_list, mu_list, num_c):
             Ys.append(np.concatenate((norm_r[i], norm_x[i]), axis = 1))
     
     # T_list['T'] ([np.array]) is the transport plan from G->G_i, each with shape [num_c,n_i]
+    
+    # import os, psutil
+    # pid = os.getpid()
+    # process = psutil.Process(pid)
+    # memory_info = process.memory_info()
+    # print(memory_info.rss/1024/1024)
     _, _, T_list = ot.gromov.fgw_barycenters(num_c, Ys, A_list, mu_list, alpha = 0.5, log = True)
+    # memory_info = process.memory_info()
+    # print(memory_info.rss/1024/1024)
     
     c = []  # record cluster info, [dict(k:#c, v:#node)]
     cr = [] # record clustered rwr
@@ -91,7 +100,11 @@ def hot(r, X_list, A_list, mu_list, test, alpha = 0.5, num_c = 10, lp =1e-3, K_l
     ts = time.time()
     # calculate intra-cost of different networks
     C_list = get_intra_cost(r, X_list, A_list, alpha)
+    t1 = time.time()
     c, cr, cx, ca = get_cluster_fgw(r, X_list, C_list, mu_list, num_c)
+    print('time for cluster aligmment:{}'.format(time.time()-t1))
+    cluster_acc = eval_cluster_acc(c, test, K)
+    print(cluster_acc)
     
     hit_pair = 0
     hit_high = 0
