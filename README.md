@@ -4,7 +4,7 @@
 
 Implementation of [Hierarchical Multi-Marginal Optimal Transport for Network Alignment](https://arxiv.org/pdf/2310.04470.pdf) in AAAI 2024.
 <p align="center">
-  <img width="1200" height="400" src="./imgs/mna.png">
+  <img width="800" height="300" src="./imgs/mna.png">
 </p>
 
 **prerequisites**
@@ -27,10 +27,10 @@ Simply run the ```run_ACM.py```, ```run_DBLP.py```, and ```run_douban.py``` to r
 
 ## Experiment Results
 <p align="center">
-  <img width="1200" height="300" src="./imgs/result-plain.png">
+  <img width="1200" height="230" src="./imgs/result-plain.png">
 </p>
 <p align="center">
-  <img width="1200" height="300" src="./imgs/result-attributed.png">
+  <img width="1200" height="230" src="./imgs/result-attributed.png">
 </p>
 
 
